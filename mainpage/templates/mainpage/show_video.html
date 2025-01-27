@@ -1,0 +1,44 @@
+{% extends 'mainpage/base.html' %}
+{% load static %}
+
+{% block title %}Webcam Page{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'mainpage/css/transcript.css' %}" />
+{% endblock %}
+
+{% block body %}
+<div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+    <div class="video-container" style="flex: 1; margin: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 20px;">
+        <h2>Describe your favourite sports moment</h2>
+        <!-- Existing video and transcription HTML -->
+        <input type="hidden" id="videoId" value="{{ video.id }}">
+
+        <video controls>
+            <source src="{{ video.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="ai_video">
+        <h2>Using Machine Learning Model to track Distraction</h2>
+            <video controls>
+                <source src="{% static 'mainpage/videos/cvModel.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+    </div>
+    <div class="transcript-section" style="flex: 1; margin: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 20px;">
+        
+        
+        
+    </div>
+    <div class="analysis-section" style="flex: 1; margin: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 20px;">
+        <!-- New div content goes here -->
+        <div id="videoContainer"></div>
+        
+
+    </div>
+</div>
+<script src="{% static 'mainpage/js/view_video.js' %}"></script>
+<script src="{% static 'mainpage/js/link_video.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webcam Video Recorder with Counter</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+</head>
+<body>
+<div>
+    <video id="videoElement" autoplay></video>
+    <button id="startRecording">Start Recording</button>
+    <button id="stopRecording">Stop Recording</button>
+    <button id="playRecording">Play Recording</button>
+    <a id="downloadLink" style="display: none;">Download Recording</a>
+    <div id="counter" style="display: none;">Recording Time: <span id="counterValue">0</span> seconds</div>
+    <div id="recordedVideoContainer"></div>
+</div>
+
+<script>
+const videoElement = document.getElementById('videoElement');
+const startRecordingButton = document.getElementById('startRecording');
+const stopRecordingButton = document.getElementById('stopRecording');
+const playRecordingButton = document.getElementById('playRecording');
+const downloadLink = document.getElementById('downloadLink');
+const counterDiv = document.getElementById('counter');
+const counterValueSpan = document.getElementById('counterValue');
+const recordedVideoContainer = document.getElementById('recordedVideoContainer');
+
+let videoStream; // To store the video stream
+let mediaRecorder;
+let recordedChunks = [];
+let counterInterval;
+let counterValue = 0;
+let recordedVideoElement; // To keep track of the currently displayed recorded video element
+
+// Initially request only the video stream
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+        videoStream = stream;
+        videoElement.srcObject = stream;
+    })
+    .catch(function (error) {
+        console.error('Error accessing the webcam:', error);
+    });
+
+startRecordingButton.addEventListener('click', function () {
+    // Request the audio stream when starting recording
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (audioStream) {
+            // Combine the video stream with the audio stream
+            let combinedStream = new MediaStream([...videoStream.getVideoTracks(), ...audioStream.getAudioTracks()]);
+            mediaRecorder = new MediaRecorder(combinedStream);
+
+            mediaRecorder.ondataavailable = function (event) {
+                recordedChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = function () {
+                clearInterval(counterInterval);
+                audioStream.getTracks().forEach(track => track.stop()); // Stop the audio stream
+
+                const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
+                downloadLink.href = URL.createObjectURL(recordedBlob);
+                downloadLink.download = 'recorded-video.webm';
+                downloadLink.style.display = 'block';
+                counterDiv.style.display = 'none';
+                playRecordingButton.disabled = false;
+            };
+
+            recordedChunks = [];
+            mediaRecorder.start();
+            startCounter();
+            playRecordingButton.disabled = true; // Disable the button during recording
+        })
+        .catch(function (error) {
+            console.error('Error accessing the microphone:', error);
+        });
+});
+
+stopRecordingButton.addEventListener('click', function () {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+    }
+});
+
+playRecordingButton.addEventListener('click', function () {
+    if (!mediaRecorder || mediaRecorder.state !== 'recording') {
+        const recordedBlob = new Blob(recordedChunks, { type: 'video/webm' });
+        const recordedVideoURL = URL.createObjectURL(recordedBlob);
+
+        // Create a new video element for playing the recorded video
+        const newVideoElement = document.createElement('video');
+        newVideoElement.src = recordedVideoURL;
+        newVideoElement.controls = true;
+
+        // Remove any previously displayed recorded video element
+        if (recordedVideoElement && recordedVideoElement.parentNode) {
+            recordedVideoElement.parentNode.removeChild(recordedVideoElement);
+        }
+
+        // Append the new video element to the container
+        recordedVideoContainer.appendChild(newVideoElement);
+
+        // Keep track of the currently displayed recorded video element
+        recordedVideoElement = newVideoElement;
+    } else {
+        console.error('Cannot play recording while recording is in progress.');
+    }
+});
+
+function startCounter() {
+    counterValue = 0;
+    counterValueSpan.textContent = counterValue;
+    counterDiv.style.display = 'block';
+    counterInterval = setInterval(function () {
+        counterValue++;
+        counterValueSpan.textContent = counterValue;
+    }, 1000);
+}
+</script>
+</body>
+</html>

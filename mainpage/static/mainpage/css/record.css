@@ -1,0 +1,62 @@
+body {
+    font-family: Archivo, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    text-align: center;
+}
+.container p{
+    font-size: 28px;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+h1.title{
+    font-size: 65px;
+}
+.record-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white; /* Original background color */
+    color: red;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 22px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 180px;
+    height: 50px;
+    border: 2px solid red;
+}
+.record-button:hover {
+    background-color: red; /* Hover background color */
+    color: white; /* Hover text color */
+    border: 2px solid red;
+}
+.upload-form button {
+    background-color: white; /* Green, original background color */
+    border: none;
+    color: #4CAF50;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    margin: 20px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 180px;
+    height: 50px;
+    border:  2px solid #4CAF50;
+}
+.upload-form button:hover {
+    background-color: #4CAF50; /* Hover background color */
+    color: white; /* Hover text color */
+}

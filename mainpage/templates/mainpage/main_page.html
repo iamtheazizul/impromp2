@@ -1,0 +1,24 @@
+{% extends 'mainpage/base.html' %}
+{% load static %}
+
+{% block title %}Recording Interface{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'mainpage/css/record.css' %}" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="title">Prompt</h1>
+  <p>Describe your favourite sports moment</p>
+  <button class="record-button">Record Live</button>
+  <form method="post" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload File</button>
+  </form>
+  
+</div>
+{% comment %} <script src="{% static 'mainpage/js/record.js' %}"></script> {% endcomment %}
+{% endblock %}
+

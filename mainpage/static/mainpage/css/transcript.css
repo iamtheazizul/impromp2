@@ -1,0 +1,51 @@
+/* Import Google Font - Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px; /* Increase base font size */
+}
+
+h2 {
+    font-size: 24px; /* Larger font size for headings */
+    font-weight: 500; /* Medium font weight */
+    margin-bottom: 20px; /* Add some spacing below the heading */
+}
+
+.video-container, .analysis-section, .new-section {
+    flex: 1;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+    background-color: #fff; /* For better contrast */
+    border-radius: 10px; /* Adds rounded corners */
+    margin-bottom: 10px;
+}
+
+video {
+    width: 100%; /* Responsive video */
+    height: auto; /* Maintain aspect ratio */
+    border: 2px solid #000; /* Adds a border around the video */
+    border-radius: 10px; /* Rounds the corners of the video player */
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    font-size: 16px; /* Increase button font size */
+    padding: 10px 20px; /* Larger button padding for better clickability */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    border-radius: 5px; /* Rounded button edges */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Cursor pointer on hover */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover for feedback */
+}
+
+/* Additional styles for inputs and forms for consistency */
+input, button, select, textarea {
+    font-family: inherit; /* Ensures inputs match the body font */
+    font-size: inherit; /* Ensures inputs match the body font size */
+}

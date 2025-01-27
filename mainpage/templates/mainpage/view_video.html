@@ -1,0 +1,36 @@
+
+  
+{% extends 'mainpage/base.html' %}
+{% load static %}
+
+{% block title %}Webcam Page{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'mainpage/css/transcript.css' %}" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="video-container">
+        <h2>Describe your favourite sports moment
+        </h2>
+        <!-- Existing video and transcription HTML -->
+        <video controls>
+            <source src="{{ video.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="show-transcript">
+            <h2>Transcription:</h2>
+            <p id="transcript-body">{{ text }}</p>
+        </div>
+        <form action="{% url 'analyze_transcription' video.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="transcription_text" value="{{ text }}" />
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+    </div>
+    <div class="dashboard-container">
+        <!-- Dashboard content goes here -->
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>{%block title%} Impromptle {%endblock%}</title>
+        {% comment %} Add css below using the format below. {% endcomment %}
+		<link rel="stylesheet" href="{% static 'mainpage/css/navbar.css' %}" />
+		
+		{% block css%} 
+        {% comment %} Use this block to add more additional css on top of the above css. {% endcomment %}
+        {%endblock%}
+	</head>
+	<body>
+		<!-- Add the body element here -->
+		
+		
+		<!-- This is the div under the navbar in the homepage -->
+        {% comment %} So you will have anything in the block below appear with the nav bar. {% endcomment %}
+		
+		{% block body%}
+
+        <div class="navbar">
+            <div class="logo">
+				<!-- We can add our logo here -->
+				<img src="{% static 'mainpage/images/logo.webp' %}" alt="Logo" />
+			</div>
+			<div class="company_name">
+				<a href="{% url 'homepage' %}">Impromptle</a>
+			</div>
+			
+
+		</div>
+		
+            Welcome to our website.
+            
+		{%endblock%}
+	</body>
+</html>

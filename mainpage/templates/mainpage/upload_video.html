@@ -1,0 +1,28 @@
+{% extends 'mainpage/base.html' %}
+{% load static %}
+
+{% block title %}Webcam Page{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'mainpage/css/record.css' %}" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="section top">Your prompt is this</div>
+    <div class="section middle">
+        <!-- This is where the webcam video will be shown. -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Upload</button>
+        </form>
+        
+    </div>
+    <div class="section bottom">
+        <span id="timer">00:00</span>
+        <button id="startButton">Start</button>
+    </div>
+</div>
+{% comment %} <script src="{% static 'mainpage/js/record.js' %}"></script> {% endcomment %}
+{% endblock %}
